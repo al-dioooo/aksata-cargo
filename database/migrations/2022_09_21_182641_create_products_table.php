@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+
+            // Contents
+            $table->string('name', 50);
+
+            $table->text('description')->nullable();
+            $table->unsignedDecimal('price', 17, 2);
+            $table->unsignedDecimal('discount', 17, 2)->nullable();
+            $table->unsignedInteger('stock');
+
+            $table->text('photo');
+
+            // Search Engine Optimization
+            $table->string('slug', 50)->unique();
+            $table->string('focus_keyword')->nullable();
+            $table->string('meta_description')->nullable()->comment('Recommended descriptions between 155-160 characters.');
+
+            // Timestamps
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('products');
+    }
+};
