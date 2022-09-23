@@ -24,7 +24,9 @@ return new class extends Migration
             $table->unsignedDecimal('discount', 17, 2)->nullable();
             $table->unsignedInteger('stock');
 
-            $table->text('photo');
+            $table->text('photo')->nullable();
+
+            $table->string('status', 10)->default('draft');
 
             // Search Engine Optimization
             $table->string('slug', 50)->unique();

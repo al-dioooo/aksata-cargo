@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,9 +16,16 @@ class Post extends Model
         'subtitle',
         'content',
 
+        'cover',
+        'status',
+
         'slug',
         'focus_keyword',
         'meta_description'
+    ];
+
+    protected $casts = [
+        'status' => StatusEnum::class
     ];
 
     public function categories()
@@ -28,5 +36,10 @@ class Post extends Model
     public function tags()
     {
         return $this->morphMany(Tag::class, 'taggable');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class);
     }
 }

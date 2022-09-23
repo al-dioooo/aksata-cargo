@@ -33,13 +33,14 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'team'
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
 
-Route::prefix('dashboard')->as('dashboard.')->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'team'])->prefix('dashboard')->as('dashboard.')->group(function () {
     Route::resource('post', PostController::class);
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);

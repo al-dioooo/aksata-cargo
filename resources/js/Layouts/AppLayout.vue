@@ -78,7 +78,7 @@ const logout = () => {
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <div class="relative ml-3">
                                 <!-- Teams Dropdown -->
-                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
@@ -99,7 +99,7 @@ const logout = () => {
                                     <template #content>
                                         <div class="w-60">
                                             <!-- Team Management -->
-                                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                                            <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team">
                                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                                     Manage Team
                                                 </div>
@@ -287,7 +287,7 @@ const logout = () => {
                             </form>
 
                             <!-- Team Management -->
-                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                            <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team">
                                 <div class="border-t border-gray-200" />
 
                                 <div class="block px-4 py-2 text-xs text-gray-400">
@@ -336,7 +336,7 @@ const logout = () => {
             </nav>
 
             <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-white shadow">
+            <header v-if="$slots.header" class="sticky top-0 z-10 bg-white shadow">
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>

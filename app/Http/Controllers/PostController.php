@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -15,7 +16,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('author')->latest()->paginate(20);
+
+        $data = [
+            'posts' => $posts
+        ];
+
+        return Inertia::render('Post/Index', $data);
     }
 
     /**

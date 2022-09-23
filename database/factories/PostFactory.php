@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use MarkSitko\LaravelUnsplash\Facades\Unsplash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -16,8 +19,26 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence(3);
+        $photos = Unsplash::randomPhoto()
+            ->count(1)
+            ->toJson();
+
         return [
-            //
+            'author_id' => 1,
+
+            'title' => $title,
+            'subtitle' => $this->faker->sentence(),
+            'content' => $this->faker->paragraph(),
+
+            // 'cover' => $this->faker->imageUrl(640, 480, 'animals', true),
+            'cover' => $photos[0]->urls->full,
+
+            'status' => $this->faker->randomElement(StatusEnum::cases()),
+
+            'focus_keyword' => $title,
+            'slug' => Str::slug($title),
+            'meta_description' => $this->faker->paragraph()
         ];
     }
 }
