@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TagController;
@@ -28,6 +29,12 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/', [PageController::class, 'index'])->name('index');
+Route::get('/about-us', [PageController::class, 'about'])->name('about.index');
+Route::get('/service', [PageController::class, 'service'])->name('service.index');
+Route::get('/blog', [PageController::class, 'blog'])->name('blog.index');
+Route::get('/shop', [PageController::class, 'shop'])->name('shop.index');
 
 Route::middleware([
     'auth:sanctum',

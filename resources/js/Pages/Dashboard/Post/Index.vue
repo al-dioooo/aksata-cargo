@@ -3,9 +3,31 @@
     import TextInput from '@/Components/TextInput.vue'
     import moment from 'moment'
     import { InertiaLink } from '@inertiajs/inertia-vue3'
+    import { reactive, watch } from '@vue/runtime-core'
+    import { Inertia } from '@inertiajs/inertia'
+
+    const params = reactive({
+        search: route().params.search
+    })
 
     defineProps({
-        posts: Object
+        posts: Object,
+        result: Number
+    })
+
+    watch(params, (newParams, oldParams) => {
+        Object.keys(params).forEach(key => {
+            if (params[key] == '') {
+                delete params[key]
+            }
+        })
+
+        Inertia.get(route('dashboard.post.index'), params, {
+            replace: true,
+            preserveState: true
+        })
+    }, {
+        deep: true
     })
 </script>
 
@@ -14,9 +36,7 @@
         <template #header>
             <div class="flex items-center justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">Post List</h2>
-                <InertiaLink :href="route('dashboard.post.create')" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">
-                    Create Post
-                </InertiaLink>
+                <InertiaLink :href="route('dashboard.post.create')" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"> Create Post </InertiaLink>
             </div>
         </template>
 
@@ -24,7 +44,7 @@
             <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="inline-block min-w-full py-2 space-y-6 align-middle sm:px-6 lg:px-8">
                     <form autocomplete="off">
-                        <TextInput id="search" name="search" type="text" class="block" placeholder="Search Post" :value="null" />
+                        <TextInput v-model="params.search" id="search" name="search" type="text" class="block" placeholder="Search Post" />
                     </form>
                     <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -52,7 +72,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <a :href="row.cover" target="_blank" class="flex-shrink-0 w-10 h-10">
-                                                <img class="object-cover w-10 h-10 rounded-full" :src="row.cover" :alt="row.title" />
+                                                <!-- <img class="object-cover w-10 h-10 rounded-full" :src="row.cover" :alt="row.title" /> -->
                                             </a>
                                             <div class="ml-4">
                                                 <div class="overflow-hidden text-sm font-medium text-gray-900 w-44 overflow-ellipsis">
@@ -87,16 +107,31 @@
                                         {{ moment(row.created_at).format("MMMM DD, YYYY") }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                        <div class="inline-flex items-center space-x-4">
+                                        <div class="inline-flex items-center space-x-2">
                                             <InertiaLink :href="route('dashboard.post.show', row.slug)" class="inline-flex items-center p-2 space-x-4 text-white transition bg-gray-800 rounded-full active:hover:scale-90">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <circle cx="12" cy="12" r="2"></circle>
+                                                    <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                                                </svg>
+                                            </InertiaLink>
+
+                                            <InertiaLink :href="route('dashboard.post.edit', row.slug)" class="inline-flex items-center p-2 space-x-4 text-white transition bg-gray-800 rounded-full active:hover:scale-90">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
+                                                    <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
                                                 </svg>
                                             </InertiaLink>
 
                                             <button @click="destroy(row)" class="inline-flex items-center p-2 space-x-4 text-white transition bg-red-800 rounded-full active:hover:scale-90">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                                                 </svg>
                                             </button>
                                         </div>

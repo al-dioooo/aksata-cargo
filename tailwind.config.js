@@ -13,8 +13,11 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+                sans: ['Eudoxus Sans', ...defaultTheme.fontFamily.sans],
             },
+            aspectRatio: {
+                'cinema': '21/9'
+            }
         },
     },
 

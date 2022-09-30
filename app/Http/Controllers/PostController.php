@@ -16,13 +16,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->latest()->paginate(20);
+        $posts = Post::with('author')->filter(request()->only(['search', 'title', 'subtitle', 'author', 'from', 'to']))->latest()->paginate(20);
 
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
+            'result' => $posts->count()
         ];
 
-        return Inertia::render('Post/Index', $data);
+        return Inertia::render('Dashboard/Post/Index', $data);
     }
 
     /**
@@ -32,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dashboard/Post/Create');
     }
 
     /**
