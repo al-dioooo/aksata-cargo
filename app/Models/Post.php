@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Enums\StatusEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -17,26 +19,25 @@ class Post extends Model
         'subtitle',
         'content',
 
-        'cover',
+        'category_id',
+
+        'cover_path',
         'status',
 
-        'slug',
-        'focus_keyword',
-        'meta_description'
+        'slug'
     ];
 
     protected $casts = [
         'status' => StatusEnum::class
     ];
 
-    public function categories()
+    protected $appends = [
+        'cover'
+    ];
+
+    public function category()
     {
         return $this->morphMany(Category::class, 'categorizable');
-    }
-
-    public function tags()
-    {
-        return $this->morphMany(Tag::class, 'taggable');
     }
 
     public function author()
@@ -49,19 +50,41 @@ class Post extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('subtitle', 'like', '%' . $search . '%');
-        })->when($filters['title'] ?? null, function ($query, $title) {
-            $query->where('title', 'like', '%' . $title . '%');
-        })->when($filters['subtitle'] ?? null, function ($query, $subtitle) {
-            $query->where('subtitle', 'like', '%' . $subtitle . '%');
-        })->when($filters['author'] ?? null, function ($query) {
-            $query->whereHas('author', function (Builder $q) {
-                $q->where('name', 'like', '%' . request('author')  . '%');
-            });
-        })->when(($filters['from'] ?? null) && ($filters['to'] ?? null), function ($query) {
-            $query->whereDate('created_at', '>=', request('from'))
-                ->whereDate('created_at', '<=', request('to'));
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            $query->withTrashed();
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } else if ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        })->when($filters['draft'] ?? null, function ($query, $archived) {
+            if ($archived === 'with') {
+                $query->where('status', 'draft')->orWhere('status', 'published');
+            } else if ($archived === 'only') {
+                $query->where('status', 'draft');
+            } else {
+                $query->where('status', 'published');
+            }
+        }, function ($query) {
+            $query->where('status', 'published');
         });
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if ($value != null) {
+            return Carbon::parse($value)->isoFormat('D MMMM YYYY');
+        }
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        if ($value != null) {
+            return Carbon::parse($value)->isoFormat('D MMMM YYYY');
+        }
+    }
+
+    public function getCoverAttribute()
+    {
+        return $this->cover_path ? Storage::disk('public')->url($this->cover_path) : null;
     }
 }

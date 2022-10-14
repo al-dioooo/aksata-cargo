@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from "@vue/reactivity"
-import { watch } from "@vue/runtime-core"
+    import { ref } from "@vue/reactivity"
+    import { watch } from "@vue/runtime-core"
 
     const props = defineProps({
         src: {
@@ -17,11 +17,13 @@ import { watch } from "@vue/runtime-core"
         }
     })
 
+    const emits = defineEmits(['update:modelValue'])
+
     const imageFile = ref('')
     const imageUrl = ref(props.src)
 
     const updatePreview = (e) => {
-        console.log(e)
+        emits('update:modelValue', e.target.files[0])
 
         if (e.target.files.length !== 0) {
             imageFile.value = e.target.files[0]
@@ -52,6 +54,6 @@ import { watch } from "@vue/runtime-core"
                 </svg>
             </div>
         </label>
-        <input type="file" :name="name" :id="id" class="hidden" accept="image/*" v-on:change="updatePreview">
+        <input type="file" :name="name" :id="id" class="hidden" accept="image/*" v-on:change="updatePreview" />
     </div>
 </template>

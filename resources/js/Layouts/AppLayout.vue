@@ -65,10 +65,6 @@ const logout = () => {
                                     Category
                                 </NavLink>
 
-                                <NavLink :href="route('dashboard.tag.index')" :active="route().current('dashboard.tag.index')">
-                                    Tag
-                                </NavLink>
-
                                 <NavLink :href="route('dashboard.user.index')" :active="route().current('dashboard.user.index')">
                                     User
                                 </NavLink>
@@ -242,10 +238,6 @@ const logout = () => {
 
                         <ResponsiveNavLink :href="route('dashboard.category.index')" :active="route().current('dashboard.category.index')">
                             Category
-                        </ResponsiveNavLink>
-
-                        <ResponsiveNavLink :href="route('dashboard.tag.index')" :active="route().current('dashboard.tag.index')">
-                            Tag
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('dashboard.user.index')" :active="route().current('dashboard.user.index')">

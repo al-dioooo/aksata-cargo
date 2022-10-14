@@ -4,7 +4,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +32,10 @@ Route::get('/', function () {
 Route::get('/', [PageController::class, 'index'])->name('index');
 Route::get('/about-us', [PageController::class, 'about'])->name('about.index');
 Route::get('/service', [PageController::class, 'service'])->name('service.index');
+Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery.index');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog.index');
+Route::get('/blog/{slug}', [PageController::class, 'post'])->name('blog.show');
+Route::get('/contact-us', [PageController::class, 'contact'])->name('contact.index');
 Route::get('/shop', [PageController::class, 'shop'])->name('shop.index');
 
 Route::middleware([
@@ -48,9 +50,14 @@ Route::middleware([
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'team'])->prefix('dashboard')->as('dashboard.')->group(function () {
-    Route::resource('post', PostController::class);
-    Route::resource('product', ProductController::class);
-    Route::resource('category', CategoryController::class);
-    Route::resource('tag', TagController::class);
+    Route::resource('post', PostController::class)->scoped([
+        'post' => 'slug'
+    ]);
+    Route::resource('product', ProductController::class)->scoped([
+        'product' => 'slug'
+    ]);
+    Route::resource('category', CategoryController::class)->scoped([
+        'category' => 'slug'
+    ]);
     Route::resource('user', UserController::class);
 });

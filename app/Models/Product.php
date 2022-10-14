@@ -33,11 +33,6 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->morphMany(Category::class, 'categorizable');
-    }
-
-    public function tags()
-    {
-        return $this->morphMany(Tag::class, 'taggable');
+        return $this->morphTo(Category::class, 'categorizable');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::filter(request()->only(['search', 'from', 'to']))->latest()->paginate(20);
+
+        $data = [
+            'categories' => $categories,
+            'result' => $categories->count()
+        ];
+
+        return Inertia::render('Dashboard/Category/Index', $data);
     }
 
     /**
@@ -25,7 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dashboard/Category/Create');
     }
 
     /**
@@ -36,7 +44,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create($request->validated());
+
+        return redirect()->route('dashboard.category.index')->banner('Successfully created a new category!');
     }
 
     /**
@@ -58,7 +68,11 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $data = [
+            'category' => $category
+        ];
+
+        return Inertia::render('Dashboard/Category/Edit', $data);
     }
 
     /**
@@ -70,7 +84,9 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->validated());
+
+        return redirect()->route('dashboard.category.index')->banner("Successfully updated {$category->name}!");
     }
 
     /**
@@ -81,6 +97,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->back()->banner("Successfully deleted {$category->name}!");
     }
 }

@@ -20,9 +20,8 @@ class PostFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(3);
-        $photos = Unsplash::randomPhoto()
-            ->count(1)
-            ->toJson();
+        $photo = Unsplash::randomPhoto()
+            ->store();
 
         return [
             'author_id' => 1,
@@ -31,14 +30,11 @@ class PostFactory extends Factory
             'subtitle' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
 
-            // 'cover' => $this->faker->imageUrl(640, 480, 'animals', true),
-            'cover' => $photos[0]->urls->full,
+            'cover_path' => $photo,
 
             'status' => $this->faker->randomElement(StatusEnum::cases()),
 
-            'focus_keyword' => $title,
-            'slug' => Str::slug($title),
-            'meta_description' => $this->faker->paragraph()
+            'slug' => Str::slug($title)
         ];
     }
 }

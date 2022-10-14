@@ -11,91 +11,76 @@
     import TextInput from '@/Components/TextInput.vue'
     import Textarea from '@/Components/Textarea.vue'
     import ImageInput from '@/Components/ImageInput.vue'
+    import axios from 'axios'
 
     const props = defineProps({
-        user: Object,
+        categories: Object,
+        post: Object
     })
 
     const form = useForm({
-        name: props.user.name,
-        email: props.user.email,
-        photo: null,
+        cover: null,
+        title: props.post?.title ?? undefined,
+        slug: props.post?.slug ?? undefined,
+        subtitle: props.post?.subtitle ?? undefined,
+        category_id: props.post?.category_id ?? undefined,
+        content: props.post?.content ?? undefined,
+        status: props.post?.status ?? undefined
     })
 
-    const verificationLinkSent = ref(null)
-    const photoPreview = ref(null)
-    const photoInput = ref(null)
+    const isLoading = ref(false)
 
-    const updateProfileInformation = () => {
-        if (photoInput.value) {
-            form.photo = photoInput.value.files[0]
+    const submitHandler = () => {
+        if (props.post) {
+            form.put(route('dashboard.post.update'), {
+                errorBag: 'updatePost'
+            })
+        } else {
+            form.post(route('dashboard.post.store'), {
+                errorBag: 'storePost'
+            })
         }
+    }
 
-        form.post(route('user-profile-information.update'), {
-            errorBag: 'updateProfileInformation',
-            preserveScroll: true,
-            onSuccess: () => clearPhotoFileInput(),
+    const updateSlug = () => {
+        isLoading.value = true
+
+        axios.get(route('api.slug', { text: form.title })).then((res) => {
+            form.slug = res.data
+            isLoading.value = false
+        }).catch((error) => {
+            console.log(`Update slug error: `, error)
+            isLoading.value = false
         })
-    }
-
-    const sendEmailVerification = () => {
-        verificationLinkSent.value = true
-    }
-
-    const selectNewPhoto = () => {
-        photoInput.value.click()
-    }
-
-    const updatePhotoPreview = () => {
-        const photo = photoInput.value.files[0]
-
-        if (!photo) return
-
-        const reader = new FileReader()
-
-        reader.onload = (e) => {
-            photoPreview.value = e.target.result
-        }
-
-        reader.readAsDataURL(photo)
-    }
-
-    const deletePhoto = () => {
-        Inertia.delete(route('current-user-photo.destroy'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                photoPreview.value = null
-                clearPhotoFileInput()
-            },
-        })
-    }
-
-    const clearPhotoFileInput = () => {
-        if (photoInput.value?.value) {
-            photoInput.value.value = null
-        }
     }
 </script>
 
 <template>
-    <FormSection @submitted="updateProfileInformation">
+    <FormSection @submitted="submitHandler">
         <template #title>Post Information</template>
 
-        <template #description>Post's main information like title, subtitle, content, category, etc. </template>
+        <template #description>Post's main information like title, subtitle, content, category, etc.</template>
 
         <template #form>
             <!-- Cover -->
             <div class="col-span-6">
                 <InputLabel for="cover" value="Cover" />
-                <ImageInput class="mt-1 aspect-cinema" name="cover" id="cover" />
+                <ImageInput :src="post?.cover" v-model="form.cover" class="mt-1 aspect-cinema" name="cover" id="cover" />
                 <InputError :message="form.errors.cover" class="mt-2" />
             </div>
 
             <!-- Title -->
             <div class="col-span-6 sm:col-span-3">
                 <InputLabel for="title" value="Title" />
-                <TextInput id="title" v-model="form.title" type="text" class="block w-full mt-1" />
+                <TextInput @change="updateSlug" id="title" v-model="form.title" type="text" class="block w-full mt-1" />
                 <InputError :message="form.errors.title" class="mt-2" />
+            </div>
+
+            <!-- Slug -->
+            <div class="col-span-6 sm:col-span-3">
+                <InputLabel for="slug" value="Slug" />
+                <TextInput id="slug" v-model="form.slug" type="text" class="block w-full mt-1" />
+                <InputError :message="form.errors.slug" class="mt-2" />
             </div>
 
             <!-- Subtitle -->
@@ -107,33 +92,30 @@
 
             <!-- Category -->
             <div class="col-span-6 sm:col-span-3">
-                <InputLabel for="category" value="Category" />
-                <TextInput id="category" v-model="form.category" type="text" class="block w-full mt-1" />
-                <InputError :message="form.errors.category" class="mt-2" />
-            </div>
-
-            <!-- Tag -->
-            <div class="col-span-6 sm:col-span-3">
-                <InputLabel for="tag" value="Tag" />
-                <TextInput id="tag" v-model="form.tag" type="text" class="block w-full mt-1" />
-                <InputError :message="form.errors.tag" class="mt-2" />
+                <InputLabel for="category_id" value="Category" />
+                <select name="category_id" id="category_id" v-model="form.category_id" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <template v-for="row in categories" :key="row">
+                        <option :value="row.id" :selected="row.id === post?.category_id">{{ row.name }}</option>
+                    </template>
+                </select>
+                <InputError :message="form.errors.category_id" class="mt-2" />
             </div>
 
             <!-- Content -->
             <div class="col-span-6">
                 <InputLabel for="content" value="Content" />
-                <Textarea id="content" v-model="form.content" type="text" class="block w-full mt-1" />
+                <Textarea rows="8" id="content" v-model="form.content" class="block w-full mt-1" />
                 <InputError :message="form.errors.content" class="mt-2" />
             </div>
         </template>
 
         <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="mr-3"> Saved. </ActionMessage>
+            <ActionMessage :on="form.recentlySuccessful" class="mr-3">Saved.</ActionMessage>
 
             <div class="flex items-center space-x-2">
-                <SecondaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Draft</SecondaryButton>
+                <SecondaryButton type="submit" @click="form.status = 'draft'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Draft</SecondaryButton>
 
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Publish</PrimaryButton>
+                <PrimaryButton @click="form.status = 'published'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</PrimaryButton>
             </div>
         </template>
     </FormSection>

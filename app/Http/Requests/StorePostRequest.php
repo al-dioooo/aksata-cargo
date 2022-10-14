@@ -24,19 +24,24 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'author_id' => 'required',
-
             'title' => 'required|string',
-            'subtitle' => 'nullable|string',
-            'content' => 'nullable|string',
+            'subtitle' => 'required|string',
+            'content' => 'required|string',
 
-            'cover' => 'nullable|image|mimes:png,jpg',
+            'category_id' => 'required',
+
+            'cover' => 'required|image|mimes:png,jpg',
 
             'status' => 'required',
 
-            'slug' => 'required|string',
-            'focus_keyword' => 'nullable|string',
-            'meta_description' => 'nullable|string'
+            'slug' => 'required|string'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'The category field is required.'
         ];
     }
 }

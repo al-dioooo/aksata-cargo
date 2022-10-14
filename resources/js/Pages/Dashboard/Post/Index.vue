@@ -1,13 +1,15 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue'
     import TextInput from '@/Components/TextInput.vue'
-    import moment from 'moment'
+    import InputLabel from '@/Components/InputLabel.vue'
     import { InertiaLink } from '@inertiajs/inertia-vue3'
     import { reactive, watch } from '@vue/runtime-core'
     import { Inertia } from '@inertiajs/inertia'
 
     const params = reactive({
-        search: route().params.search
+        search: route().params.search,
+        archived: route().params.archived,
+        trashed: route().params.trashed
     })
 
     defineProps({
@@ -43,8 +45,29 @@
         <div class="py-10 overflow-x-auto lg:py-8">
             <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="inline-block min-w-full py-2 space-y-6 align-middle sm:px-6 lg:px-8">
-                    <form autocomplete="off">
-                        <TextInput v-model="params.search" id="search" name="search" type="text" class="block" placeholder="Search Post" />
+                    <form autocomplete="off" class="flex items-center space-x-4">
+                        <div>
+                            <InputLabel for="search" value="Search" />
+                            <TextInput v-model="params.search" id="search" name="search" type="text" class="block mt-1" />
+                        </div>
+                        <!-- Draft -->
+                        <div>
+                            <InputLabel for="draft" value="Status" />
+                            <select name="draft" id="draft" v-model="params.draft" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option :value="undefined"></option>
+                                <option value="with">With Draft</option>
+                                <option value="only">Only Draft</option>
+                            </select>
+                        </div>
+                        <!-- Trashed -->
+                        <div class="col-span-6 sm:col-span-3">
+                            <InputLabel for="archived" value="Trashed" />
+                            <select name="trashed" id="trashed" v-model="params.trashed" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option :value="undefined"></option>
+                                <option value="with">With Trashed</option>
+                                <option value="only">Only Trashed</option>
+                            </select>
+                        </div>
                     </form>
                     <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -72,7 +95,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <a :href="row.cover" target="_blank" class="flex-shrink-0 w-10 h-10">
-                                                <!-- <img class="object-cover w-10 h-10 rounded-full" :src="row.cover" :alt="row.title" /> -->
+                                                <img class="object-cover w-10 h-10 rounded-full" :src="row.cover" />
                                             </a>
                                             <div class="ml-4">
                                                 <div class="overflow-hidden text-sm font-medium text-gray-900 w-44 overflow-ellipsis">
@@ -104,7 +127,7 @@
                                         <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Published</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ moment(row.created_at).format("MMMM DD, YYYY") }}
+                                        {{ row.created_at }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <div class="inline-flex items-center space-x-2">

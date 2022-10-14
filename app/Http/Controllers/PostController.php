@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Inertia\Inertia;
 
@@ -16,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->filter(request()->only(['search', 'title', 'subtitle', 'author', 'from', 'to']))->latest()->paginate(20);
+        $posts = Post::with('author')->filter(request()->only(['search', 'draft', 'trashed']))->latest()->paginate(20);
 
         $data = [
             'posts' => $posts,
@@ -33,7 +34,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/Post/Create');
+        $categories = Category::get();
+
+        $data = [
+            'categories' => $categories
+        ];
+
+        return Inertia::render('Dashboard/Post/Create', $data);
     }
 
     /**
@@ -44,7 +51,25 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $post = new Post();
+
+        $post->title = $request->input('title');
+        $post->subtitle = $request->input('subtitle');
+        $post->slug = $request->input('slug');
+        $post->status = $request->input('status');
+
+        $category = Category::findOrFail($request->input('category_id'));
+        $post->category()->save($category);
+
+        $post->author_id = auth()->user()->id;
+
+        if ($request->file('cover') !== null) {
+            $post->cover_path = $request->file('cover')->storePublicly('cover', ['disk' => 'public']);
+        }
+
+        $post->save();
+
+        return redirect()->route('dashboard.post.index')->banner('Successfully created a new post!');
     }
 
     /**
@@ -66,7 +91,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::get();
+
+        $data = [
+            'categories' => $categories,
+            'post' => $post
+        ];
+
+        return Inertia::render('Dashboard/Post/Edit', $data);
     }
 
     /**
