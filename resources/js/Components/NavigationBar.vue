@@ -55,7 +55,7 @@
                             <path d="M9 10a0.5 .5 0 0 0 1 0v-1a0.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a0.5 .5 0 0 0 0 -1h-1a0.5 .5 0 0 0 0 1"></path>
                         </svg>
                     </div>
-                    <span class="hidden underline underline-offset-4 md:block">+62 897-313-0809</span>
+                    <span class="hidden underline underline-offset-4 md:block">+62 897-3130-809</span>
                 </a>
             </li>
         </ul>
@@ -64,7 +64,7 @@
         <nav class="flex items-center justify-between w-full max-w-6xl px-8 md:px-0">
             <!-- Logo -->
             <div class="flex items-center space-x-4">
-                <div><img class="w-12 h-auto" src="/storage/img/aksata-cargo-logo.png" alt="Aksata Cargo Logo" /></div>
+                <div><img class="w-12 h-auto" src="/img/aksata-cargo-logo.png" alt="Aksata Cargo Logo" /></div>
                 <div class="flex-col hidden text-xs font-medium md:flex">
                     <span>Aksata Cargo</span>
                     <span>Jagonya Jasa Cargo Murah</span>
@@ -86,6 +86,9 @@
                 </li>
                 <li>
                     <inertia-link :href="route('blog.index')" :class="route().current('blog.index') && 'underline underline-offset-4'">Blog</inertia-link>
+                </li>
+                <li>
+                    <inertia-link :href="route('register.index')" :class="route().current('register.index') && 'underline underline-offset-4'">Register</inertia-link>
                 </li>
                 <li>
                     <inertia-link :href="route('contact.index')" :class="route().current('contact.index') && 'underline underline-offset-4'">Contact Us</inertia-link>
@@ -111,6 +114,7 @@
                 <GuestResponsiveNavLink :href="route('about.index')" :active="route().current('about.index')">About Us</GuestResponsiveNavLink>
                 <GuestResponsiveNavLink :href="route('service.index')" :active="route().current('service.index')">Services</GuestResponsiveNavLink>
                 <GuestResponsiveNavLink :href="route('gallery.index')" :active="route().current('gallery.index')">Gallery</GuestResponsiveNavLink>
+                <GuestResponsiveNavLink :href="route('register.index')" :active="route().current('register.index')">Register</GuestResponsiveNavLink>
                 <GuestResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">Blog</GuestResponsiveNavLink>
                 <GuestResponsiveNavLink :href="route('contact.index')" :active="route().current('contact.index')">Contact Us</GuestResponsiveNavLink>
                 <GuestResponsiveNavLink :href="route('shop.index')" :active="route().current('shop.index')">Shop</GuestResponsiveNavLink>

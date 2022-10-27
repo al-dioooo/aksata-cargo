@@ -13,12 +13,14 @@
     import axios from 'axios'
 
     const props = defineProps({
-        category: Object
+        category: Object,
+        types: Object
     })
 
     const form = useForm({
         name: props.category?.name ?? undefined,
         slug: props.category?.slug ?? undefined,
+        type: props.category?.type ?? undefined,
     })
 
     const isLoading = ref(false)
@@ -67,6 +69,17 @@
                 <InputLabel for="slug" value="Slug" />
                 <TextInput id="slug" v-model="form.slug" type="text" class="block w-full mt-1" />
                 <InputError :message="form.errors.slug" class="mt-2" />
+            </div>
+
+            <!-- Type -->
+            <div class="col-span-6 sm:col-span-3">
+                <InputLabel for="type" value="Type" />
+                <select name="type" id="type" v-model="form.type" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <template v-for="row in types" :key="row">
+                        <option :value="row.key" :selected="row.key === category?.type">{{ row.label }}</option>
+                    </template>
+                </select>
+                <InputError :message="form.errors.type" class="mt-2" />
             </div>
         </template>
 

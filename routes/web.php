@@ -33,6 +33,7 @@ Route::get('/', [PageController::class, 'index'])->name('index');
 Route::get('/about-us', [PageController::class, 'about'])->name('about.index');
 Route::get('/service', [PageController::class, 'service'])->name('service.index');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery.index');
+Route::get('/register', [PageController::class, 'register'])->name('register.index');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog.index');
 Route::get('/blog/{slug}', [PageController::class, 'post'])->name('blog.show');
 Route::get('/contact-us', [PageController::class, 'contact'])->name('contact.index');

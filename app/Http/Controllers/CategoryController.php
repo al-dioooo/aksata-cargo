@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TypeEnum;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Post;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
@@ -16,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::filter(request()->only(['search', 'from', 'to']))->latest()->paginate(20);
+        $categories = Category::filter(request()->only(['search', 'trashed']))->latest()->paginate(20);
 
         $data = [
             'categories' => $categories,
@@ -33,7 +36,22 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/Category/Create');
+        $types = [
+            [
+                'key' => TypeEnum::Product,
+                'label' => TypeEnum::Product->label()
+            ],
+            [
+                'key' => TypeEnum::Post,
+                'label' => TypeEnum::Post->label()
+            ]
+        ];
+
+        $data = [
+            'types' => $types
+        ];
+
+        return Inertia::render('Dashboard/Category/Create', $data);
     }
 
     /**

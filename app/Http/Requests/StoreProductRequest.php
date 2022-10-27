@@ -13,7 +13,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +24,23 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'description' => 'required|string',
+
+            'category_id' => 'required',
+
+            'photo' => 'required|image|mimes:png,jpg',
+
+            'status' => 'required',
+
+            'slug' => 'required|string|unique:products,slug'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'The category field is required.'
         ];
     }
 }

@@ -2,29 +2,9 @@
     import GuestLayout from '@/Layouts/GuestLayout.vue'
     import { InertiaLink } from '@inertiajs/inertia-vue3'
 
-    const props = defineProps({
+    defineProps({
         posts: Array
     })
-
-    const posts = [
-        {
-            id: 1,
-            title: 'First Post',
-            subtitle: 'Postingan pertama Aksata Cargo.',
-            cover: 'https://placehold.co/1600x900/EEE/31343C?font=source-sans-pro&text=Image%20Placeholder',
-            slug: 'first-post',
-            categories: [
-                {
-                    name: 'Aksata',
-                    slug: 'aksata'
-                },
-                {
-                    name: 'Cargo',
-                    slug: 'cargo'
-                }
-            ],
-        }
-    ]
 </script>
 
 <template>
@@ -41,7 +21,7 @@
             <div class="flex justify-center w-full">
                 <div class="flex flex-col w-full max-w-6xl">
                     <ul class="grid mt-6 sm:gap-y-12 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 2xl:gap-16 2xl:gap-y-16">
-                        <template v-for="row in props.posts" :key="row">
+                        <template v-for="row in posts" :key="row">
                             <li class="relative">
                                 <div class="text-left focus:outline-none">
                                     <inertia-link :href="route('blog.show', row.slug)">
@@ -62,6 +42,9 @@
                                     </span>
                                 </div>
                             </li>
+                        </template>
+                        <template v-if="posts?.length == 0">
+                            No post available.
                         </template>
                     </ul>
                 </div>

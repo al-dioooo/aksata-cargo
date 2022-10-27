@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,22 +18,20 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
+            // Foreigns
+            $table->foreignIdFor(User::class, 'created_by');
+            $table->foreignIdFor(Category::class, 'category_id');
+
             // Contents
             $table->string('name', 50);
+            $table->string('description')->nullable();
 
-            $table->text('description')->nullable();
-            $table->unsignedDecimal('price', 17, 2);
-            $table->unsignedDecimal('discount', 17, 2)->nullable();
-            $table->unsignedInteger('stock');
-
-            $table->text('photo')->nullable();
+            $table->text('photo_path')->nullable();
 
             $table->string('status', 10)->default('draft');
 
             // Search Engine Optimization
             $table->string('slug', 50)->unique();
-            $table->string('focus_keyword')->nullable();
-            $table->string('meta_description')->nullable()->comment('Recommended descriptions between 155-160 characters.');
 
             // Timestamps
             $table->timestamps();

@@ -37,7 +37,7 @@ class Post extends Model
 
     public function category()
     {
-        return $this->morphMany(Category::class, 'categorizable');
+        return $this->belongsTo(Category::class)->where('type', static::class);
     }
 
     public function author()

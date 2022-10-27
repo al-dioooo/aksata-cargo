@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->filter(request()->only(['search', 'draft', 'trashed']))->latest()->paginate(20);
+        $posts = Post::with('author', 'category')->filter(request()->only(['search', 'draft', 'trashed']))->latest()->paginate(20);
 
         $data = [
             'posts' => $posts,
@@ -34,7 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::get();
+        $categories = Category::where('type', Post::class)->get();
 
         $data = [
             'categories' => $categories
@@ -55,11 +55,12 @@ class PostController extends Controller
 
         $post->title = $request->input('title');
         $post->subtitle = $request->input('subtitle');
+        $post->content = $request->input('content');
         $post->slug = $request->input('slug');
         $post->status = $request->input('status');
 
         $category = Category::findOrFail($request->input('category_id'));
-        $post->category()->save($category);
+        $post->category()->associate($category);
 
         $post->author_id = auth()->user()->id;
 
@@ -110,7 +111,28 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->title = $request->input('title');
+        $post->subtitle = $request->input('subtitle');
+        $post->content = $request->input('content');
+        $post->slug = $request->input('slug');
+        $post->status = $request->input('status');
+
+        $category = Category::findOrFail($request->input('category_id'));
+        $post->category()->associate($category);
+
+        $post->author_id = auth()->user()->id;
+
+        if ($request->file('cover') !== null) {
+            if ($post->cover_path && file_exists(storage_path($post->cover_path))) {
+                unlink(storage_path($post->cover_path));
+            }
+
+            $post->cover_path = $request->file('cover')->storePublicly('cover', ['disk' => 'public']);
+        }
+
+        $post->save();
+
+        return redirect()->route('dashboard.post.index')->banner('Successfully updated a post!');
     }
 
     /**

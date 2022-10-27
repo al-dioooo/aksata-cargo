@@ -5,7 +5,7 @@
     const props = defineProps({
         src: {
             type: String,
-            default: `https://placehold.co/2100x900/e2e8f0/f1f5f9?font=source-sans-pro&text=21 : 9`
+            default: `https://placehold.co/900x900/e2e8f0/f1f5f9?font=source-sans-pro&text=Upload%20image%20here`
         },
         name: {
             type: String,

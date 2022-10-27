@@ -34,7 +34,7 @@ class StorePostRequest extends FormRequest
 
             'status' => 'required',
 
-            'slug' => 'required|string'
+            'slug' => 'required|string|unique:posts,slug'
         ];
     }
 

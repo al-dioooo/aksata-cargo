@@ -75,6 +75,7 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Post</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Author</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Category</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Status</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Created At</th>
                                     <th scope="col" class="relative px-6 py-3">
@@ -122,6 +123,9 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        {{ row.category?.name }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span v-if="row.status === 'draft'" class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">Draft</span>
                                         <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Published</span>
@@ -131,14 +135,6 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <div class="inline-flex items-center space-x-2">
-                                            <InertiaLink :href="route('dashboard.post.show', row.slug)" class="inline-flex items-center p-2 space-x-4 text-white transition bg-gray-800 rounded-full active:hover:scale-90">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <circle cx="12" cy="12" r="2"></circle>
-                                                    <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
-                                                </svg>
-                                            </InertiaLink>
-
                                             <InertiaLink :href="route('dashboard.post.edit', row.slug)" class="inline-flex items-center p-2 space-x-4 text-white transition bg-gray-800 rounded-full active:hover:scale-90">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

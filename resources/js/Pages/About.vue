@@ -37,7 +37,7 @@
                         <!-- Management -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/storage/img/team-management.jpg" alt="" />
+                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/img/team-management.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl">Management</h5>
@@ -48,7 +48,7 @@
                         <!-- Operational -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/storage/img/team-operational.jpg" alt="" />
+                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/img/team-operational.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl">Operational</h5>
@@ -59,7 +59,7 @@
                         <!-- Armada -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/storage/img/team-armada.jpg" alt="" />
+                                <img class="object-cover w-full overflow-hidden bg-white border ring ring-slate-100 rounded-3xl aspect-video" src="/img/team-armada.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl">Armada</h5>

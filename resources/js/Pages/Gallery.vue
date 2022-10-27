@@ -4,28 +4,28 @@
 
     const photos = [
         {
-            url: "/storage/img/galleries/1.jpg"
+            url: "/img/galleries/1.jpg"
         },
         {
-            url: "/storage/img/galleries/2.jpg"
+            url: "/img/galleries/2.jpg"
         },
         {
-            url: "/storage/img/galleries/3.jpg"
+            url: "/img/galleries/3.jpg"
         },
         {
-            url: "/storage/img/galleries/4.jpg"
+            url: "/img/galleries/4.jpg"
         },
         {
-            url: "/storage/img/galleries/5.jpg"
+            url: "/img/galleries/5.jpg"
         },
         {
-            url: "/storage/img/galleries/6.jpg"
+            url: "/img/galleries/6.jpg"
         },
         {
-            url: "/storage/img/galleries/7.jpg"
+            url: "/img/galleries/7.jpg"
         },
         {
-            url: "/storage/img/galleries/8.jpg"
+            url: "/img/galleries/8.jpg"
         }
     ]
 

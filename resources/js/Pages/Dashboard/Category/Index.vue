@@ -1,12 +1,14 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue'
     import TextInput from '@/Components/TextInput.vue'
+    import InputLabel from '@/Components/InputLabel.vue'
     import { InertiaLink } from '@inertiajs/inertia-vue3'
     import { reactive, watch } from '@vue/runtime-core'
     import { Inertia } from '@inertiajs/inertia'
 
     const params = reactive({
-        search: route().params.search
+        search: route().params.search,
+        trashed: route().params.trashed
     })
 
     defineProps({
@@ -42,8 +44,20 @@
         <div class="py-10 overflow-x-auto lg:py-8">
             <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="inline-block min-w-full py-2 space-y-6 align-middle sm:px-6 lg:px-8">
-                    <form autocomplete="off">
-                        <TextInput v-model="params.search" id="search" name="search" type="text" class="block" placeholder="Search Category" />
+                    <form autocomplete="off" class="flex items-center space-x-4">
+                        <div>
+                            <InputLabel for="search" value="Search" />
+                            <TextInput v-model="params.search" id="search" name="search" type="text" class="block mt-1" />
+                        </div>
+                        <!-- Trashed -->
+                        <div class="col-span-6 sm:col-span-3">
+                            <InputLabel for="archived" value="Trashed" />
+                            <select name="trashed" id="trashed" v-model="params.trashed" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option :value="undefined"></option>
+                                <option value="with">With Trashed</option>
+                                <option value="only">Only Trashed</option>
+                            </select>
+                        </div>
                     </form>
                     <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -51,6 +65,7 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Category</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Slug</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Type</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Created At</th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Updated At</th>
                                     <th scope="col" class="relative px-6 py-3">
@@ -73,6 +88,9 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         {{ row.slug }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        {{ row.type }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         {{ row.created_at }}

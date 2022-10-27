@@ -1,3 +1,11 @@
+<script setup>
+    import GuestLayout from '@/Layouts/GuestLayout.vue'
+
+    defineProps({
+        products: Array
+    })
+</script>
+
 <template>
     <GuestLayout>
         <!-- Page Title Section -->
@@ -10,42 +18,17 @@
         <!-- Product List Section -->
         <section class="min-w-full px-8 py-8 bg-white md:px-0 md:py-16">
             <div class="flex justify-center w-full">
-                <div class="flex flex-col w-full max-w-6xl">
-                    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
-                        <!-- Product -->
-                        <template v-for="row in products" :key="row">
-                            <div class="space-y-2">
-                                <div>
-                                    <img class="object-cover w-full overflow-hidden bg-white rounded-xl aspect-[4/5]" :src="row.imageSrc" :alt="row.imageAlt" />
-                                </div>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between w-full text-xs md:text-sm">
-                                        <h5>{{ row.name }}</h5>
-                                        <h5 class="font-medium">{{ row.price }}</h5>
-                                    </div>
-                                    <a :href="`https://wa.me/628973130809?text=Permisi, Saya ingin memesan ${row.name}`" target="_blank" class="flex justify-center w-full px-4 py-2 text-xs bg-blue-100 rounded-xl"> Order on WhatsApp </a>
-                                </div>
-                            </div>
-                        </template>
+                <a href="https://shop.aksatacargo.id" target="_blank" class="flex items-center space-x-4 group">
+                    <div class="underline transition decoration-slate-300 group-hover:decoration-black underline-offset-4">Go to <span class="font-semibold">shop.aksatacargo.id</span></div>
+                    <div class="p-2 transition border rounded-full border-slate-300 group-hover:border-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <line x1="17" y1="7" x2="7" y2="17"></line>
+                            <polyline points="8 7 17 7 17 16"></polyline>
+                        </svg>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
     </GuestLayout>
 </template>
-
-<script setup>
-    import GuestLayout from '@/Layouts/GuestLayout.vue'
-
-    const products = [
-        {
-            id: 1,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-        }
-    ]
-</script>

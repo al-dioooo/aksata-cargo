@@ -66,19 +66,13 @@
                 <div class="space-y-4 md:space-y-8">
                     <p class="text-sm font-medium md:text-xl"><inertia-link :href="route('blog.index')">Blog</inertia-link></p>
                     <ul class="space-y-2 md:space-y-4">
-                        <li><inertia-link :href="route('index')">About Us</inertia-link></li>
-                        <li><inertia-link :href="route('service.index')">Services</inertia-link></li>
-                        <li><inertia-link :href="route('gallery.index')">Gallery</inertia-link></li>
-                        <li><inertia-link :href="route('contact.index')">Contact Us</inertia-link></li>
+                        <li><inertia-link :href="route('blog.index')">See All</inertia-link></li>
                     </ul>
                 </div>
                 <div class="space-y-4 md:space-y-8">
                     <p class="text-sm font-medium md:text-xl"><inertia-link :href="route('shop.index')">Shop</inertia-link></p>
                     <ul class="space-y-2 md:space-y-4">
-                        <li><inertia-link :href="route('index')">About Us</inertia-link></li>
-                        <li><inertia-link :href="route('service.index')">Services</inertia-link></li>
-                        <li><inertia-link :href="route('gallery.index')">Gallery</inertia-link></li>
-                        <li><inertia-link :href="route('contact.index')">Contact Us</inertia-link></li>
+                        <li><inertia-link :href="route('shop.index')">See All</inertia-link></li>
                     </ul>
                 </div>
             </div>

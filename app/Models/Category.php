@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TypeEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,24 +14,25 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'type'
     ];
 
-    public function categorizable()
-    {
-        return $this->morphTo();
-    }
+    protected $casts = [
+        'type' => TypeEnum::class
+    ];
 
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('slug', 'like', '%' . $search . '%');
-        })->when(($filters['from'] ?? null) && ($filters['to'] ?? null), function ($query) {
-            $query->whereDate('created_at', '>=', request('from'))
-                ->whereDate('created_at', '<=', request('to'));
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            $query->withTrashed();
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } else if ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
         });
     }
 

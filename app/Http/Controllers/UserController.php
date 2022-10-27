@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -13,7 +15,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with(['posts', 'products'])->filter(request()->only(['search']))->latest()->paginate(20);
+
+        $data = [
+            'users' => $users,
+            'result' => $users->count()
+        ];
+
+        return Inertia::render('Dashboard/User/Index', $data);
     }
 
     /**

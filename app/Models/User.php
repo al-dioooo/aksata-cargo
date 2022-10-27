@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasNoPersonalTeam;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,4 +62,36 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
+        });
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if ($value != null) {
+            return Carbon::parse($value)->isoFormat('D MMMM YYYY');
+        }
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        if ($value != null) {
+            return Carbon::parse($value)->isoFormat('D MMMM YYYY');
+        }
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'created_by');
+    }
 }

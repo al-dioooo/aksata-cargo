@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/slug', [ApiController::class, 'slug'])->name('api.slug');
+Route::get('/product', [ApiController::class, 'product'])->name('api.product');

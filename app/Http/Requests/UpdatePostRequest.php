@@ -13,7 +13,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +24,24 @@ class UpdatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|string',
+            'subtitle' => 'required|string',
+            'content' => 'required|string',
+
+            'category_id' => 'required',
+
+            'cover' => 'nullable|image|mimes:png,jpg',
+
+            'status' => 'required',
+
+            'slug' => "required|string|unique:posts,slug,{$this->post->id}"
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'The category field is required.'
         ];
     }
 }

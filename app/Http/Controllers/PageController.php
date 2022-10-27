@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,9 +29,14 @@ class PageController extends Controller
         return Inertia::render('Gallery');
     }
 
+    public function register()
+    {
+        return Inertia::render('Register');
+    }
+
     public function blog()
     {
-        $posts = Post::with('categories')->get();
+        $posts = Post::with('category')->get();
 
         $data = [
             'posts' => $posts
@@ -41,7 +47,7 @@ class PageController extends Controller
 
     public function post($slug)
     {
-        $post = Post::with('categories')->where('slug', $slug)->firstOrFail();
+        $post = Post::with('category')->where('slug', $slug)->firstOrFail();
 
         $data = [
             'post' => $post
@@ -57,6 +63,12 @@ class PageController extends Controller
 
     public function shop()
     {
-        return Inertia::render('Shop/Index');
+        $products = Product::with('category')->get();
+
+        $data = [
+            'products' => $products
+        ];
+
+        return Inertia::render('Shop/Index', $data);
     }
 }

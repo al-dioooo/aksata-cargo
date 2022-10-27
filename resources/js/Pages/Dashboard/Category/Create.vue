@@ -5,8 +5,7 @@
     import Form from '@/Pages/Dashboard/Category/Form.vue'
 
     defineProps({
-        confirmsTwoFactorAuthentication: Boolean,
-        sessions: Array,
+        types: Array
     })
 </script>
 
@@ -27,9 +26,7 @@
 
         <div>
             <div class="py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <Form />
-                </div>
+                <Form :types="types" />
             </div>
         </div>
     </AppLayout>

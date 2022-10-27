@@ -23,7 +23,7 @@
                         <!-- Service Cargo Darat -->
                         <div class="space-y-2 md:space-y-4">
                             <div>
-                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/storage/img/cargo-land.jpg" alt="" />
+                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/img/cargo-land.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl md:mt-8">Service Cargo Darat</h5>
@@ -34,7 +34,7 @@
                         <!-- Service Cargo Laut -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/storage/img/cargo-sea.jpg" alt="" />
+                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/img/cargo-sea.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl md:mt-8">Service Cargo Laut</h5>
@@ -45,7 +45,7 @@
                         <!-- Service Cargo Udara -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/storage/img/cargo-plane.jpg" alt="" />
+                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/img/cargo-plane.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl md:mt-8">Service Cargo Udara</h5>
@@ -56,7 +56,7 @@
                         <!-- Jasa Titip Beli -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/storage/img/service-jastip.jpg" alt="" />
+                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/img/service-jastip.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl md:mt-8">Jasa Titip</h5>
@@ -67,7 +67,7 @@
                         <!-- Cargo Pindahan & Alat Berat -->
                         <div class="space-y-4">
                             <div>
-                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/storage/img/cargo-truck.jpg" alt="" />
+                                <img class="object-cover overflow-hidden bg-white md:max-w-lg rounded-3xl aspect-video" src="/img/cargo-truck.jpg" alt="" />
                             </div>
                             <div class="space-y-4">
                                 <h5 class="mt-4 text-lg font-medium md:text-2xl md:mt-8">Cargo Pindahan & Alat Berat</h5>

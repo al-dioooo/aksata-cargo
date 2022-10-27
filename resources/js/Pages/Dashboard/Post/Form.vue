@@ -25,14 +25,14 @@
         subtitle: props.post?.subtitle ?? undefined,
         category_id: props.post?.category_id ?? undefined,
         content: props.post?.content ?? undefined,
-        status: props.post?.status ?? undefined
+        status: props.post?.status ?? 1
     })
 
     const isLoading = ref(false)
 
     const submitHandler = () => {
         if (props.post) {
-            form.put(route('dashboard.post.update'), {
+            form.put(route('dashboard.post.update', { post: props.post }), {
                 errorBag: 'updatePost'
             })
         } else {
@@ -113,9 +113,10 @@
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">Saved.</ActionMessage>
 
             <div class="flex items-center space-x-2">
-                <SecondaryButton type="submit" @click="form.status = 'draft'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Draft</SecondaryButton>
+                <SecondaryButton v-if="form.status === 'published'" type="submit" @click="form.status = 'draft'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Draft</SecondaryButton>
+                <SecondaryButton v-if="form.status === 'draft'" type="submit" @click="form.status = 'published'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</SecondaryButton>
 
-                <PrimaryButton @click="form.status = 'published'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</PrimaryButton>
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Save</PrimaryButton>
             </div>
         </template>
     </FormSection>

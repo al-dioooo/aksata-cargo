@@ -16,7 +16,8 @@ module.exports = {
                 sans: ['Eudoxus Sans', ...defaultTheme.fontFamily.sans],
             },
             aspectRatio: {
-                'cinema': '21/9'
+                'cinema': '21 / 9',
+                'product-thumbnail': '4 / 5'
             }
         },
     },

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('slug', 50)->unique();
-            $table->nullableMorphs('categorizable');
+            $table->string('type')->index();
             $table->timestamps();
             $table->softDeletes();
         });
