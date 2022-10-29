@@ -13,6 +13,8 @@
     import ImageInput from '@/Components/ImageInput.vue'
     import axios from 'axios'
 
+    const submitButton = ref(null)
+
     const props = defineProps({
         categories: Object,
         post: Object
@@ -25,7 +27,7 @@
         subtitle: props.post?.subtitle ?? undefined,
         category_id: props.post?.category_id ?? undefined,
         content: props.post?.content ?? undefined,
-        status: props.post?.status ?? 1
+        status: props.post?.status ?? 'published'
     })
 
     const isLoading = ref(false)
@@ -52,6 +54,12 @@
             console.log(`Update slug error: `, error)
             isLoading.value = false
         })
+    }
+
+    const updateStatus = (value) => {
+        form.status = value
+
+        submitButton.value.click()
     }
 </script>
 
@@ -113,10 +121,11 @@
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">Saved.</ActionMessage>
 
             <div class="flex items-center space-x-2">
-                <SecondaryButton v-if="form.status === 'published'" type="submit" @click="form.status = 'draft'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Draft</SecondaryButton>
-                <SecondaryButton v-if="form.status === 'draft'" type="submit" @click="form.status = 'published'" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</SecondaryButton>
+                <SecondaryButton v-if="form.status === 'published'" @click="updateStatus('draft')" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Draft</SecondaryButton>
+                <SecondaryButton v-if="form.status === 'draft'" @click="updateStatus('published')" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</SecondaryButton>
 
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Save</PrimaryButton>
+                <PrimaryButton v-if="props.post" ref="submitButton" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Save</PrimaryButton>
+                <PrimaryButton v-if="!props.post" ref="submitButton" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || isLoading">Publish</PrimaryButton>
             </div>
         </template>
     </FormSection>

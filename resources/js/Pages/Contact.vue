@@ -1,6 +1,24 @@
 <script setup>
     import GuestLayout from '@/Layouts/GuestLayout.vue'
-    import { InertiaLink } from '@inertiajs/inertia-vue3'
+    import { InertiaLink, useForm } from '@inertiajs/inertia-vue3'
+    import InputError from '@/Components/InputError.vue'
+    import InputLabel from '@/Components/InputLabel.vue'
+    import GuestTextInput from '@/Components/GuestTextInput.vue'
+    import GuestTextarea from '@/Components/GuestTextarea.vue'
+
+    const form = useForm({
+        name: null,
+        email: null,
+        phone: null,
+        receipt: null,
+        message: null
+    })
+
+    const submitHandler = () => {
+        form.post(route('message'), {
+            errorBag: 'sendMessage'
+        })
+    }
 </script>
 
 <template>
@@ -12,7 +30,7 @@
             </div>
         </section>
 
-        <!-- About Section -->
+        <!-- Contact Section -->
         <section class="min-w-full py-8 md:py-0 bg-slate-50">
             <div class="flex justify-center w-full">
                 <div class="flex flex-col-reverse w-full max-w-6xl md:flex-row md:items-center">
@@ -81,6 +99,53 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="min-w-full py-8 md:py-16 bg-slate-50">
+            <div class="flex justify-center w-full">
+                <div class="flex flex-col w-full max-w-lg px-8 space-y-8 md:space-y-16 md:px-0 md:items-center">
+                    <div>
+                        <h1 class="text-xl font-medium md:text-4xl w-max">Send Message</h1>
+                    </div>
+                    <form class="w-full space-y-8 text-xs" @submit.prevent="submitHandler">
+                        <div class="space-y-4">
+                            <div>
+                                <InputLabel for="name" value="Name" />
+                                <GuestTextInput id="name" v-model="form.name" type="text" class="block w-full mt-1" />
+                                <InputError :message="form.errors.name" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="email" value="Email" />
+                                <GuestTextInput id="email" v-model="form.email" type="text" class="block w-full mt-1" />
+                                <InputError :message="form.errors.email" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="phone" value="Phone" />
+                                <GuestTextInput id="phone" v-model="form.phone" type="text" class="block w-full mt-1" />
+                                <InputError :message="form.errors.phone" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="receipt" value="Receipt (Resi)" />
+                                <GuestTextInput id="receipt" v-model="form.receipt" type="text" class="block w-full mt-1" />
+                                <InputError :message="form.errors.receipt" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="message" value="Message" />
+                                <GuestTextarea id="message" v-model="form.message" class="block w-full mt-1" />
+                                <InputError :message="form.errors.message" class="mt-2" />
+                            </div>
+                        </div>
+                        <div>
+                            <button class="flex justify-center w-full px-4 py-2 text-lg transition bg-blue-100 rounded-full hover:bg-blue-200">Send Message</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>

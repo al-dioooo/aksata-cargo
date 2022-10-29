@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactRequest;
+use App\Models\Contact;
 use App\Models\Post;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -59,6 +61,13 @@ class PageController extends Controller
     public function contact()
     {
         return Inertia::render('Contact');
+    }
+
+    public function message(StoreContactRequest $request)
+    {
+        $contact = Contact::create($request->validated());
+
+        return redirect()->back()->banner('Thank you for contact us! We will contact you shortly.');
     }
 
     public function shop()

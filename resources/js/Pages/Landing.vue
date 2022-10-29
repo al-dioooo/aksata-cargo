@@ -2,6 +2,7 @@
     import GuestLayout from '@/Layouts/GuestLayout.vue'
     import HeroCarousel from '@/Components/HeroCarousel.vue'
     import YoutubeCarousel from '@/Components/YoutubeCarousel.vue'
+    import GuestTextInput from '@/Components/GuestTextInput.vue'
     import { InertiaLink } from '@inertiajs/inertia-vue3'
     import { ref } from '@vue/reactivity'
 
@@ -232,15 +233,15 @@
                             <label for="">Dimensi</label>
                             <div class="grid grid-cols-3 gap-4 mt-1">
                                 <div class="flex items-center">
-                                    <input v-model="length" type="number" class="block w-full text-xs" placeholder="L" />
+                                    <GuestTextInput id="length" placeholder="L" v-model="length" type="number" class="block w-full text-xs" />
                                     <div class="flex items-center h-full px-2">cm</div>
                                 </div>
                                 <div class="flex items-center">
-                                    <input v-model="width" type="number" class="block w-full text-xs" placeholder="W" />
+                                    <GuestTextInput id="length" placeholder="W" v-model="width" type="number" class="block w-full text-xs" />
                                     <div class="flex items-center h-full px-2">cm</div>
                                 </div>
                                 <div class="flex items-center">
-                                    <input v-model="height" type="number" class="block w-full text-xs" placeholder="H" />
+                                    <GuestTextInput id="length" placeholder="H" v-model="height" type="number" class="block w-full text-xs" />
                                     <div class="flex items-center h-full px-2">cm</div>
                                 </div>
                             </div>
@@ -298,8 +299,8 @@
         <section class="min-w-full py-8 border-t bg-slate-100">
             <div class="flex justify-center w-full">
                 <div class="w-full max-w-6xl md:flex md:items-center">
-                    <div class="grid w-full grid-cols-3 gap-4 px-8 md:px-16 md:p-16">
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/tv/CjijwGLrxQ1/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background: #fff; border: 0; border-radius: 3px; box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5), 0 1px 10px 0 rgba(0, 0, 0, 0.15); margin: 1px; max-width: 540px; min-width: 326px; padding: 0; width: 99.375%; width: -webkit-calc(100% - 2px); width: calc(100% - 2px)">
+                    <div class="grid w-full grid-cols-3 gap-24 px-8 md:px-16 md:p-16">
+                        <blockquote class="bg-white" data-instgrm-permalink="https://www.instagram.com/tv/CjijwGLrxQ1/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
                             <div style="padding: 16px">
                                 <a href="https://www.instagram.com/tv/CjijwGLrxQ1/?utm_source=ig_embed&amp;utm_campaign=loading" style="background: #ffffff; line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%" target="_blank">
                                     <div style="display: flex; flex-direction: row; align-items: center">
@@ -349,7 +350,7 @@
                             </div>
                         </blockquote>
 
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CjexCcfhhjJ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background: #fff; border: 0; border-radius: 3px; box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5), 0 1px 10px 0 rgba(0, 0, 0, 0.15); margin: 1px; max-width: 540px; min-width: 326px; padding: 0; width: 99.375%; width: -webkit-calc(100% - 2px); width: calc(100% - 2px)">
+                        <blockquote class="bg-white" data-instgrm-permalink="https://www.instagram.com/p/CjexCcfhhjJ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
                             <div style="padding: 16px">
                                 <a href="https://www.instagram.com/p/CjexCcfhhjJ/?utm_source=ig_embed&amp;utm_campaign=loading" style="background: #ffffff; line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%" target="_blank">
                                     <div style="display: flex; flex-direction: row; align-items: center">
@@ -399,7 +400,7 @@
                             </div>
                         </blockquote>
 
-                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CjXRPKtOtyQ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background: #fff; border: 0; border-radius: 3px; box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5), 0 1px 10px 0 rgba(0, 0, 0, 0.15); margin: 1px; max-width: 540px; min-width: 326px; padding: 0; width: 99.375%; width: -webkit-calc(100% - 2px); width: calc(100% - 2px)">
+                        <blockquote class="bg-white" data-instgrm-permalink="https://www.instagram.com/p/CjXRPKtOtyQ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
                             <div style="padding: 16px">
                                 <a href="https://www.instagram.com/p/CjXRPKtOtyQ/?utm_source=ig_embed&amp;utm_campaign=loading" style="background: #ffffff; line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%" target="_blank">
                                     <div style="display: flex; flex-direction: row; align-items: center">

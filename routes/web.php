@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
@@ -30,6 +31,7 @@ Route::get('/', function () {
 });
 
 Route::get('/', [PageController::class, 'index'])->name('index');
+Route::post('/message', [PageController::class, 'message'])->name('message');
 Route::get('/about-us', [PageController::class, 'about'])->name('about.index');
 Route::get('/service', [PageController::class, 'service'])->name('service.index');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery.index');

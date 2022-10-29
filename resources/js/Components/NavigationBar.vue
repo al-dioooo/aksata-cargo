@@ -2,6 +2,7 @@
     import { InertiaLink } from '@inertiajs/inertia-vue3'
     import { ref } from '@vue/reactivity'
     import GuestResponsiveNavLink from '@/Components/GuestResponsiveNavLink.vue'
+    import GuestBanner from './GuestBanner.vue';
 
     const showingNavigationDropdown = ref(false)
 </script>
@@ -60,64 +61,67 @@
             </li>
         </ul>
     </div>
-    <header class="sticky inset-x-0 z-50 justify-center py-4 bg-white border-b md:flex top-8">
-        <nav class="flex items-center justify-between w-full max-w-6xl px-8 md:px-0">
-            <!-- Logo -->
-            <div class="flex items-center space-x-4">
-                <div><img class="w-12 h-auto" src="/img/aksata-cargo-logo.png" alt="Aksata Cargo Logo" /></div>
-                <div class="flex-col hidden text-xs font-medium md:flex">
-                    <span>Aksata Cargo</span>
-                    <span>Jagonya Jasa Cargo Murah</span>
+    <header class="sticky inset-x-0 z-50 border-b top-8">
+        <GuestBanner />
+        <div class="justify-center py-4 bg-white md:flex">
+            <nav class="flex items-center justify-between w-full max-w-6xl px-8 md:px-0">
+                <!-- Logo -->
+                <div class="flex items-center space-x-4">
+                    <div><img class="w-12 h-auto" src="/img/aksata-cargo-logo.png" alt="Aksata Cargo Logo" /></div>
+                    <div class="flex-col hidden text-xs font-medium md:flex">
+                        <span>Aksata Cargo</span>
+                        <span>Jagonya Jasa Cargo Murah</span>
+                    </div>
                 </div>
-            </div>
-            <!-- Links -->
-            <ul class="items-center hidden space-x-12 text-sm md:flex">
-                <li>
-                    <inertia-link :href="route('index')" :class="route().current('index') && 'underline underline-offset-4'">Discover</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('about.index')" :class="route().current('about.index') && 'underline underline-offset-4'">About Us</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('service.index')" :class="route().current('service.index') && 'underline underline-offset-4'">Services</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('gallery.index')" :class="route().current('gallery.index') && 'underline underline-offset-4'">Gallery</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('blog.index')" :class="route().current('blog.index') && 'underline underline-offset-4'">Blog</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('register.index')" :class="route().current('register.index') && 'underline underline-offset-4'">Register</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('contact.index')" :class="route().current('contact.index') && 'underline underline-offset-4'">Contact Us</inertia-link>
-                </li>
-                <li>
-                    <inertia-link :href="route('shop.index')" :class="route().current('shop.index') && 'underline underline-offset-4'">Shop</inertia-link>
-                </li>
-            </ul>
-            <!-- Hamburger -->
-            <div class="flex items-center -mr-2 sm:hidden">
-                <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
-                    <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ hidden: showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ hidden: !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </nav>
-        <!-- Responsive Navigation Menu -->
-        <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="mt-8 sm:hidden">
-            <div class="pt-2 pb-3 space-y-1">
-                <GuestResponsiveNavLink :href="route('index')" :active="route().current('index')">Discover</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('about.index')" :active="route().current('about.index')">About Us</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('service.index')" :active="route().current('service.index')">Services</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('gallery.index')" :active="route().current('gallery.index')">Gallery</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('register.index')" :active="route().current('register.index')">Register</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">Blog</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('contact.index')" :active="route().current('contact.index')">Contact Us</GuestResponsiveNavLink>
-                <GuestResponsiveNavLink :href="route('shop.index')" :active="route().current('shop.index')">Shop</GuestResponsiveNavLink>
+                <!-- Links -->
+                <ul class="items-center hidden space-x-12 text-sm md:flex">
+                    <li>
+                        <inertia-link :href="route('index')" :class="route().current('index') && 'underline underline-offset-4'">Discover</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('about.index')" :class="route().current('about.index') && 'underline underline-offset-4'">About Us</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('service.index')" :class="route().current('service.index') && 'underline underline-offset-4'">Services</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('gallery.index')" :class="route().current('gallery.index') && 'underline underline-offset-4'">Gallery</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('blog.index')" :class="route().current('blog.index') && 'underline underline-offset-4'">Blog</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('register.index')" :class="route().current('register.index') && 'underline underline-offset-4'">Register</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('contact.index')" :class="route().current('contact.index') && 'underline underline-offset-4'">Contact Us</inertia-link>
+                    </li>
+                    <li>
+                        <inertia-link :href="route('shop.index')" :class="route().current('shop.index') && 'underline underline-offset-4'">Shop</inertia-link>
+                    </li>
+                </ul>
+                <!-- Hamburger -->
+                <div class="flex items-center -mr-2 sm:hidden">
+                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
+                        <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{ hidden: showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path :class="{ hidden: !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <!-- Responsive Navigation Menu -->
+            <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="mt-8 sm:hidden">
+                <div class="pt-2 pb-3 space-y-1">
+                    <GuestResponsiveNavLink :href="route('index')" :active="route().current('index')">Discover</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('about.index')" :active="route().current('about.index')">About Us</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('service.index')" :active="route().current('service.index')">Services</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('gallery.index')" :active="route().current('gallery.index')">Gallery</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('register.index')" :active="route().current('register.index')">Register</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">Blog</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('contact.index')" :active="route().current('contact.index')">Contact Us</GuestResponsiveNavLink>
+                    <GuestResponsiveNavLink :href="route('shop.index')" :active="route().current('shop.index')">Shop</GuestResponsiveNavLink>
+                </div>
             </div>
         </div>
     </header>
